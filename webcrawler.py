@@ -356,7 +356,11 @@ def add_to_index(index, url, keyword):
                   return
       index.append([keyword, [url]])
 
-
+def lookup(index, keyword):
+      for entry in index:
+            if (entry[0] == keyword):
+                  return entry[1]
+      return []
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
 #start_quote = webpage.find('"', first_link_index)
