@@ -293,6 +293,19 @@ def get_page(url):
         return ""
     return ""
 
+
+
+def get_next_link(page):
+      link_structure = "<a href="
+      start_index = page.find(link_structure)
+      if (start_index == -1):
+            return None, 0
+      start_quote_index = page.find('"', start_index)
+      end_quote_index = page.find('"', start_quote_index+1)
+      url = page[start_quote_index+1: end_quote_index]
+      return url, end_quote_index
+
+
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
 #start_quote = webpage.find('"', first_link_index)
