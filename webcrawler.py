@@ -332,6 +332,21 @@ def crawl_web(seed, max_page):
                   crawled.append(page)
       return crawled
                   
+def crawl_web_depth(seed, max_depth):
+      to_crawl = [seed]
+      crawled = []
+      next_depth = []
+      depth = 0
+
+      while to_crawl and depth <= max_depth:
+            page = to_crawl.pop()
+            if (page not in crawled):
+                  next_depth = union(next_depth, get_all_links(get_page(page)))
+                  crawled.append(page)
+            if not to_crawl:
+                  to_crawl, next_depth = next_depth, []
+                  depth += 1
+      return crawled
 
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
