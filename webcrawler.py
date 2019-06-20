@@ -305,6 +305,18 @@ def get_next_link(page):
       url = page[start_quote_index+1: end_quote_index]
       return url, end_quote_index
 
+def get_all_links(page):
+      links = []
+      while True:
+            url, end_quote_index = get_next_link(page)
+            if url:
+                  # print(url)
+                  links.append(url)
+                  page = page[end_quote_index:]
+            else:
+                  break
+      return links
+
 
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
