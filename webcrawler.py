@@ -293,7 +293,11 @@ def get_page(url):
         return ""
     return ""
 
-
+def union(list1, list2):
+    for item in list2:
+        if item not in list1:
+            list1.append(item)
+    return list1
 
 def get_next_link(page):
       link_structure = "<a href="
@@ -317,6 +321,17 @@ def get_all_links(page):
                   break
       return links
 
+def crawl_web(seed, max_page):
+      to_crawl = [seed]
+      crawled = []
+      while to_crawl and len(crawled) < max_page:
+            page = to_crawl.pop()
+            if (page not in crawled):
+                  links = get_all_links(get_page(page))
+                  to_crawl = union(to_crawl, links)
+                  crawled.append(page)
+      return crawled
+                  
 
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
