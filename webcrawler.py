@@ -348,6 +348,15 @@ def crawl_web_depth(seed, max_depth):
                   depth += 1
       return crawled
 
+def add_to_index(index, url, keyword):
+      #index structure - [[keyword, [url1, url2]]]
+      for entry in index:
+            if (entry[0] == keyword):
+                  entry[1].append(url)
+                  return
+      index.append([keyword, [url]])
+
+
 #first_link_index = webpage.find(link_structure)
 #print(first_link_index)
 #start_quote = webpage.find('"', first_link_index)
