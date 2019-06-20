@@ -93,6 +93,15 @@ def lookup(index, keyword):
                   return entry[1]
       return []
 
+def add_page_to_index(index, url, content):
+      for word in content.split():
+            add_to_index(index, url, word)
+
 
 # print(crawl_web("http://www.udacity.com/cs101x/index.html",3))
 print(crawl_web_depth("http://www.udacity.com/cs101x/index.html",0))
+index = []
+add_page_to_index(index, 'georgeben.dev', 'My name is George Benjamin')
+add_page_to_index(index, 'github.com', 'George Benjamin is a software developer')
+print(lookup(index, 'George'))
+#print(index)
