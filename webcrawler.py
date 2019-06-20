@@ -1,6 +1,7 @@
-def get_page(url):
-    try:
-        if url == "http://www.udacity.com/cs101x/index.html":
+import urllib.request
+
+def get_page_mock(url):
+      if url == "http://www.udacity.com/cs101x/index.html":
             return ('<html> <body> This is a test page for learning to crawl! '
             '<p> It is a good idea to '
             '<a href="http://www.udacity.com/cs101x/crawling.html">learn to '
@@ -8,21 +9,27 @@ def get_page(url):
             '<a href="http://www.udacity.com/cs101x/walking.html">walk</a> '
             'or  <a href="http://www.udacity.com/cs101x/flying.html">fly</a>. '
             '</p> </body> </html> ')
-        elif url == "http://www.udacity.com/cs101x/crawling.html":
+      elif url == "http://www.udacity.com/cs101x/crawling.html":
             return ('<html> <body> I have not learned to crawl yet, but I '
             'am quite good at '
             '<a href="http://www.udacity.com/cs101x/kicking.html">kicking</a>.'
             '</body> </html>')
-        elif url == "http://www.udacity.com/cs101x/walking.html":
+      elif url == "http://www.udacity.com/cs101x/walking.html":
             return ('<html> <body> I cant get enough '
             '<a href="http://www.udacity.com/cs101x/index.html">crawling</a>! '
             '</body> </html>')
-        elif url == "http://www.udacity.com/cs101x/flying.html":
+      elif url == "http://www.udacity.com/cs101x/flying.html":
             return ('<html> <body> The magic words are Squeamish Ossifrage! '
             '</body> </html>')
+
+
+def get_page(url):
+    try:
+      content = urllib.request.urlopen(url).read()
+      return str(content)
     except:
-        return ""
-    return ""
+      return ""
+
 
 def union(list1, list2):
     for item in list2:
@@ -55,13 +62,16 @@ def get_all_links(page):
 def crawl_web(seed, max_page):
       to_crawl = [seed]
       crawled = []
+      index = []
       while to_crawl and len(crawled) < max_page:
-            page = to_crawl.pop()
-            if (page not in crawled):
-                  links = get_all_links(get_page(page))
+            url = to_crawl.pop()
+            if (url not in crawled):
+                  page_content = get_page(url)
+                  links = get_all_links(page_content)
                   to_crawl = union(to_crawl, links)
-                  crawled.append(page)
-      return crawled
+                  crawled.append(url)
+                  add_page_to_index(index, url, page_content)
+      return index
                   
 def crawl_web_depth(seed, max_depth):
       to_crawl = [seed]
@@ -97,11 +107,11 @@ def add_page_to_index(index, url, content):
       for word in content.split():
             add_to_index(index, url, word)
 
-
-# print(crawl_web("http://www.udacity.com/cs101x/index.html",3))
-print(crawl_web_depth("http://www.udacity.com/cs101x/index.html",0))
-index = []
-add_page_to_index(index, 'georgeben.dev', 'My name is George Benjamin')
-add_page_to_index(index, 'github.com', 'George Benjamin is a software developer')
-print(lookup(index, 'George'))
+index = crawl_web("https://georgeben.dev",5)
+print(index)
+# print(crawl_web_depth("http://www.udacity.com/cs101x/index.html",0))
+# index = []
+# add_page_to_index(index, 'georgeben.dev', 'My name is George Benjamin')
+# add_page_to_index(index, 'github.com', 'George Benjamin is a software developer')
+print(lookup(index, 'developer'))
 #print(index)
