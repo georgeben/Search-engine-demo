@@ -86,10 +86,6 @@ def add_page_to_index(index, url, content):
             add_to_index(index, url, word)
 
 index = crawl_web("https://georgeben.dev",5)
-print(index)
-# print(crawl_web_depth("http://www.udacity.com/cs101x/index.html",0))
-# index = []
-# add_page_to_index(index, 'georgeben.dev', 'My name is George Benjamin')
-# add_page_to_index(index, 'github.com', 'George Benjamin is a software developer')
-print(lookup(index, 'developer'))
 #print(index)
+
+print(lookup(index, 'developer'))
